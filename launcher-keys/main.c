@@ -155,31 +155,31 @@ int main(int argc, char *argv[])
 
 	if (lastKey & PAD_CIRCLE)
 	{
-		if (file_exists("mc0:/APPS/ULE.ELF"))
-			LoadElf("mc0:/APPS/ULE.ELF", "mc0:/APPS/");
+		if (file_exists("mc0:/BOOT/BOOT.ELF"))
+			LoadElf("mc0:/BOOT/BOOT.ELF", "mc0:/BOOT/");
 
-		if (file_exists("mc1:/APPS/ULE.ELF"))
-			LoadElf("mc1:/APPS/ULE.ELF", "mc1:/APPS/");
+		if (file_exists("mc1:/BOOT/BOOT.ELF"))
+			LoadElf("mc1:/BOOT/BOOT.ELF", "mc1:/BOOT/");
 
-		if (file_exists("mc0:/APPS/OPNPS2LD.ELF"))
-			LoadElf("mc0:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
+		if (file_exists("mc0:/BOOT/FMCBD.ELF"))
+			LoadElf("mc0:/BOOT/FMCBD.ELF", "mc0:/BOOT/");
 
-		if (file_exists("mc1:/APPS/OPNPS2LD.ELF"))
-			LoadElf("mc1:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
+		if (file_exists("mc1:/BOOT/FMCBD.ELF"))
+			LoadElf("mc1:/BOOT/FMCBD.ELF", "mc0:/BOOT/");
 	}
 	else
 	{
-		if (file_exists("mc0:/APPS/OPNPS2LD.ELF"))
-			LoadElf("mc0:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
+		if (file_exists("mc0:/BOOT/FMCBD.ELF"))
+			LoadElf("mc0:/BOOT/FMCBD.ELF", "mc0:/BOOT/");
 
-		if (file_exists("mc1:/APPS/OPNPS2LD.ELF"))
-			LoadElf("mc1:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
+		if (file_exists("mc1:/BOOT/FMCBD.ELF"))
+			LoadElf("mc1:/BOOT/FMCBD.ELF", "mc0:/BOOT/");
 
-		if (file_exists("mc0:/APPS/ULE.ELF"))
-			LoadElf("mc0:/APPS/ULE.ELF", "mc0:/APPS/");
+		if (file_exists("mc0:/BOOT/BOOT.ELF"))
+			LoadElf("mc0:/BOOT/BOOT.ELF", "mc0:/BOOT/");
 
-		if (file_exists("mc1:/APPS/ULE.ELF"))
-			LoadElf("mc1:/APPS/ULE.ELF", "mc1:/APPS/");
+		if (file_exists("mc1:/BOOT/BOOT.ELF"))
+			LoadElf("mc1:/BOOT/BOOT.ELF", "mc1:/BOOT/");
 	}
 
 	__asm__ __volatile__(
