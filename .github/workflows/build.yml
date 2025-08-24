@@ -13,14 +13,12 @@ jobs:
       run: apk add --no-cache make
     - name: "Debug: Check environment"
       run: |
-        echo "--- PATH ---"
-        echo $PATH
         echo "--- ls /usr/local/ps2dev/ee/bin/ ---"
         ls -l /usr/local/ps2dev/ee/bin/
     - name: Build exploit
-      run: |
-        export PS2DEV=/usr/local/ps2dev
-        export PS2SDK=$PS2DEV/ps2sdk
-        export GSKIT=$PS2DEV/gsKit
-        export PATH=$PATH:$PS2DEV/bin:$PS2DEV/ee/bin:$PS2DEV/iop/bin:$PS2DEV/dvp/bin:$PS2SDK/bin
-        make -C exploit
+      env:
+        PS2DEV: /usr/local/ps2dev
+        PS2SDK: /usr/local/ps2dev/ps2sdk
+        GSKIT: /usr/local/ps2dev/gsKit
+        PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ps2dev/bin:/usr/local/ps2dev/ee/bin:/usr/local/ps2dev/iop/bin:/usr/local/ps2dev/dvp/bin:/usr/local/ps2dev/ps2sdk/bin
+      run: make -C exploit
