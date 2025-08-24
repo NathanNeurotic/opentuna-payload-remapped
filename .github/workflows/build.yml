@@ -10,7 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install make
-      run: |
-        apt-get update && apt-get install -y make
+      run: apk add --no-cache make
     - name: Build exploit
       run: make -C exploit
