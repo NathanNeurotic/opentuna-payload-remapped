@@ -100,11 +100,11 @@ int main(int argc, char *argv[])
 
 	InitPS2();
 
-	if (file_exists("mc0:/BOOT/BOOT.ELF"))
-		LoadElf("mc0:/BOOT/BOOT.ELF", "mc0:/BOOT/");
+	if (file_exists("mc0:/OPENTUNA/OPENTUNA.ELF"))
+		LoadElf("mc0:/OPENTUNA/OPENTUNA.ELF", "mc0:/OPENTUNA/");
 
-	if (file_exists("mc1:/BOOT/BOOT.ELF"))
-		LoadElf("mc1:/BOOT/BOOT.ELF", "mc1:/BOOT/");
+	if (file_exists("mc1:/OPENTUNA/OPENTUNA.ELF"))
+		LoadElf("mc1:/OPENTUNA/OPENTUNA.ELF", "mc1:/OPENTUNA/");
 
 	__asm__ __volatile__(
 		"	li $3, 0x04;"
