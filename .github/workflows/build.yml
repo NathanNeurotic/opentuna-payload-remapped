@@ -1,0 +1,13 @@
+name: Build OpenTuna Exploit
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ps2dev/ps2dev:latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build exploit
+      run: make -C exploit

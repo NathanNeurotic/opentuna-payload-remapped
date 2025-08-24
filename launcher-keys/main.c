@@ -153,22 +153,11 @@ int main(int argc, char *argv[])
 		padEnd();
 	}
 
-       if (lastKey & PAD_CIRCLE)
-       {
-              if (file_exists("mc0:/OPENTUNA/BOOT.ELF"))
-                      LoadElf("mc0:/OPENTUNA/BOOT.ELF", "mc0:/OPENTUNA/");
-
-              if (file_exists("mc1:/OPENTUNA/BOOT.ELF"))
-                      LoadElf("mc1:/OPENTUNA/BOOT.ELF", "mc1:/OPENTUNA/");
-       }
-       else
-       {
-              if (file_exists("mc0:/OPENTUNA/BOOT.ELF"))
-                      LoadElf("mc0:/OPENTUNA/BOOT.ELF", "mc0:/OPENTUNA/");
-
-              if (file_exists("mc1:/OPENTUNA/BOOT.ELF"))
-                      LoadElf("mc1:/OPENTUNA/BOOT.ELF", "mc1:/OPENTUNA/");
-       }
+       // Regardless of the key pressed, we will attempt to load the ELF.
+       if (file_exists("mc0:/OPENTUNA/BOOT.ELF"))
+               LoadElf("mc0:/OPENTUNA/BOOT.ELF", "mc0:/OPENTUNA/");
+       else if (file_exists("mc1:/OPENTUNA/BOOT.ELF"))
+               LoadElf("mc1:/OPENTUNA/BOOT.ELF", "mc1:/OPENTUNA/");
 
 	__asm__ __volatile__(
 		"	li $3, 0x04;"
