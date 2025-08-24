@@ -9,9 +9,7 @@ jobs:
       image: ps2dev/ps2dev:latest
     steps:
     - uses: actions/checkout@v4
-    - name: Install make
-      run: apk add --no-cache make
+    - name: Install Build Dependencies
+      run: apk add --no-cache make gmp mpfr mpc
     - name: Build exploit
-      env:
-        LD_LIBRARY_PATH: /usr/local/ps2dev/lib
       run: make -C exploit
