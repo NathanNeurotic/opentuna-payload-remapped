@@ -11,15 +11,5 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install make
       run: apk add --no-cache make
-    - name: "Debug: Check environment"
-      run: |
-        echo "--- whoami ---"
-        whoami
-        echo "--- pwd ---"
-        pwd
-        echo "--- env ---"
-        env
-        echo "--- ls -la /usr/local/ps2dev/ee/bin/ ---"
-        ls -la /usr/local/ps2dev/ee/bin/
     - name: Build exploit
-      run: make -C exploit EE_CC=/usr/local/ps2dev/ee/bin/ee-gcc
+      run: make -C exploit
