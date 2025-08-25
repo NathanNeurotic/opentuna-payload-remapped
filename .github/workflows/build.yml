@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Build Dependencies
-      run: apk add --no-cache make gmp mpfr mpc1
+      run: apk add --no-cache make gmp mpfr mpc1 wine
     - name: Build exploit
       run: make -C exploit
