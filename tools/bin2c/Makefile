@@ -1,5 +1,5 @@
-TARGET = bin2s
-OBJS = bin2s.o
+TARGET = bin2c
+OBJS = bin2c.o
 
 CC = gcc
 CFLAGS = -O2 -Wall
