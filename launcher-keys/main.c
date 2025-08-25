@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <sbv_patches.h>
 #include <libpad.h>
+#include "pad.h"
 #include <stdio.h>
 #include <debug.h>
 #include <fcntl.h>
@@ -129,7 +130,7 @@ int main(int argc, char *argv[])
 	// Getting region char
 	romver_region_char[0] = (romver[4] == 'E' ? 'E' : (romver[4] == 'J' ? 'I' : (romver[4] == 'H' ? 'A' : (romver[4] == 'U' ? 'A' : romver[4]))));
 
-	strncpy(ROMVersionNumStr, romver, 4);
+	strncpy(ROMVersionNumStr, (const char*)romver, 4);
 	ROMVersionNumStr[4] = '\0';
 	bios_version = strtoul(ROMVersionNumStr, NULL, 16);
 
