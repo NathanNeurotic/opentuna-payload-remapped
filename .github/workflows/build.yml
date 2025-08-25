@@ -1,15 +1,31 @@
-name: Build OpenTuna Exploit
+name: Debug PS2DEV Container
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  build:
+  debug-build-environment:
     runs-on: ubuntu-latest
     container:
       image: ps2dev/ps2dev:latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Install Build Dependencies
-      run: apk add --no-cache make gmp mpfr mpc
-    - name: Build exploit
-      run: make -C exploit
+    - name: Install build tools and dependencies
+      run: |
+        echo "--- Attempting to install make, gmp, mpfr, mpc ---"
+        apk add --no-cache make gmp mpfr mpc
+        echo "--- apk command finished ---"
+    - name: Find where libraries were installed
+      run: |
+        echo "--- Files for gmp package ---"
+        apk info -L gmp
+        echo "--- Files for mpfr package ---"
+        apk info -L mpfr4
+        echo "--- Files for mpc package ---"
+        apk info -L mpc
+    - name: Find essential libraries system-wide
+      run: |
+        echo "--- Searching for libmpc.so ---"
+        find / -name "libmpc.so.*"
+        echo "--- Searching for libmpfr.so ---"
+        find / -name "libmpfr.so.*"
+        echo "--- Searching for libgmp.so ---"
+        find / -name "libgmp.so.*"
