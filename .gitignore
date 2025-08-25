@@ -1,0 +1,17 @@
+# Ignore object files and dependencies
+*.o
+*.d
+*.a
+
+# Ignore binary outputs
+*.elf
+*.bin
+*.out
+*.exe
+
+# Generated exploit payload source
+exploit/payload_elf.c
+
+# Common build directories
+build/
+dist/
