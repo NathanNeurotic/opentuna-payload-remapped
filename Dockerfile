@@ -11,5 +11,6 @@ RUN apk add --no-cache \
     libgcc \
     libstdc++ \
     zlib-dev \
-    ncurses-libs
+    ncurses-libs \
+    bash
 
