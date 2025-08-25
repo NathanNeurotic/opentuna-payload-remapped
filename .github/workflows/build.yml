@@ -12,6 +12,4 @@ jobs:
     - name: Install Build Dependencies
       run: apk add --no-cache make gmp mpfr mpc1
     - name: Build exploit
-      env:
-        LD_LIBRARY_PATH: /usr/lib
       run: make -C exploit
