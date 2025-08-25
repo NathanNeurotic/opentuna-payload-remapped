@@ -2,15 +2,13 @@ FROM ps2dev/ps2dev:latest
 
 RUN apk add --no-cache \
     make \
-    wine \
-    xvfb \
     gcc \
     libc-dev \
-    xvfb-run \
-    vulkan-loader-dev \
-    libgcc \
-    libstdc++ \
     zlib-dev \
-    ncurses-libs \
     bash
+
+COPY tools/ps2-packer /tmp/ps2-packer
+RUN make -C /tmp/ps2-packer ps2-packer-lite && \
+    cp /tmp/ps2-packer/ps2-packer-lite /usr/local/bin/ps2-packer && \
+    rm -rf /tmp/ps2-packer
 
