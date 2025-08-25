@@ -13,6 +13,3 @@ jobs:
           -e HOME=/app -e WINEPREFIX=/app/.wine \
           opentuna-build:latest \
           bash -lc "mkdir -p \$WINEPREFIX && make -C exploit"
-    - uses: actions/checkout@v4
-    - name: Build the Docker image for exploration
-      run: docker build . --tag opentuna-build:latest
