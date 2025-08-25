@@ -4,6 +4,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --tag opentuna-build:latest
+      - name: Run the build in the container
+        run: |
+          docker run --rm -v "${{ github.workspace }}":/app -w /app \
+          --user $(id -u):$(id -g) \
+          -e HOME=/app -e WINEPREFIX=/app/.wine \
+          opentuna-build:latest \
+          bash -lc "mkdir -p \$WINEPREFIX && make -C exploit"
     - uses: actions/checkout@v4
     - name: Build the Docker image for exploration
       run: docker build . --tag opentuna-build:latest
