@@ -1,9 +1,17 @@
 name: Build OpenTuna Exploit
+
 on: [push, pull_request]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image for exploration
+    - name: Build the Docker image
       run: docker build . --tag opentuna-build:latest
+    - name: Run the build in the container
+      run: |
+        docker run --rm -v "${{ github.workspace }}":/app -w /app \
+        -e "WINEPREFIX=/tmp/.wine" \
+        opentuna-build:latest \
+        /bin/sh -c "Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 & export DISPLAY=:99 && make -C exploit"
