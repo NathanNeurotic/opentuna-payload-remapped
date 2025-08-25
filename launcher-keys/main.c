@@ -13,13 +13,17 @@
 #include <fcntl.h>
 #include <sbv_patches.h>
 #include <libpad.h>
-#include "pad.h"
 #include <stdio.h>
 #include <debug.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+
+// Forward declarations for pad functions
+int  readPad(void);
+void waitAnyPadReady(void);
+int  setupPad(void);
 
 #define NTSC 2
 #define PAL 3
