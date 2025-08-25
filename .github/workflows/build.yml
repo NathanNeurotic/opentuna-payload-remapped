@@ -14,4 +14,4 @@ jobs:
         docker run --rm -v "${{ github.workspace }}":/app -w /app \
         -e "WINEPREFIX=/tmp/.wine" \
         opentuna-build:latest \
-        /bin/sh -c "Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 & export DISPLAY=:99 && make -C exploit"
+        make -C exploit
