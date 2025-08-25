@@ -9,7 +9,7 @@ jobs:
         run: docker build . --tag opentuna-build:latest
       - name: Run the build in the container
         run: |
-          docker run --rm --user $(id -u):$(id -g) -v "${{ github.workspace }}":/app -w /app \
+          docker run --rm -v "${{ github.workspace }}":/app -w /app \
           -e HOME=/app \
           opentuna-build:latest \
           bash -lc "make -C exploit"
