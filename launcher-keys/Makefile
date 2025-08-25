@@ -30,11 +30,7 @@ $(EE_BIN_STRIPPED): $(EE_BIN)
 
 	
 $(EE_BIN_PACKED): $(EE_BIN_STRIPPED)
-ifdef OS
-	../ps2_packer/ps2_packer.exe -v $< $@
-else
-	xvfb-run wine ../ps2_packer/ps2_packer.exe -v $< $@
-endif
+       ps2-packer -v $< $@
 	
 
 
