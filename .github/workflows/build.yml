@@ -19,7 +19,7 @@ jobs:
     - name: Install Build Dependencies
       run: |
         apk add --no-cache git build-base gmp mpfr mpc1 wine
-        env -u GIT_ASKPASS -u SSH_ASKPASS git clone --depth 1 https://github.com/ps2dev/bin2s.git /tmp/bin2s
+        env -u GIT_ASKPASS -u SSH_ASKPASS GIT_TERMINAL_PROMPT=1 git clone --depth 1 https://github.com/ps2dev/bin2s.git /tmp/bin2s
         make -C /tmp/bin2s install
     - name: Build exploit
       run: make -C exploit
