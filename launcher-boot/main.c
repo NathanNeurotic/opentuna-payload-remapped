@@ -12,6 +12,7 @@
 
 #include <fcntl.h>
 #include <sbv_patches.h>
+#include <fileio.h>
 
 #include <stdio.h>
 #include <debug.h>
