@@ -1,25 +1,32 @@
-- name: Set up PS2 toolchain
-  run: |
-    git clone https://github.com/ps2dev/ps2toolchain.git
-    cd ps2toolchain
-    ./toolchain.sh
-    echo "$HOME/ps2dev/bin" >> $GITHUB_PATH
-    echo "$HOME/ps2dev/ee/bin" >> $GITHUB_PATH
-
-- name: Set up PS2SDK
-  run: |
-    git clone --depth=1 https://github.com/ps2dev/ps2sdk.git $HOME/ps2dev/ps2sdk
-    git clone --depth=1 https://github.com/ps2dev/ps2sdk-ports.git $HOME/ps2dev/ps2sdk-ports
-    
+---
 name: Build OpenTuna Exploit
-on: [push, pull_request]
+
+'on': [push, pull_request]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up PS2 toolchain
+        run: |
+          git clone https://github.com/ps2dev/ps2toolchain.git
+          cd ps2toolchain
+          ./toolchain.sh
+          echo "$HOME/ps2dev/bin" >> $GITHUB_PATH
+          echo "$HOME/ps2dev/ee/bin" >> $GITHUB_PATH
+
+      - name: Set up PS2SDK
+        run: |
+          git clone --depth=1 https://github.com/ps2dev/ps2sdk.git \
+            $HOME/ps2dev/ps2sdk
+          git clone --depth=1 https://github.com/ps2dev/ps2sdk-ports.git \
+            $HOME/ps2dev/ps2sdk-ports
+
       - name: Build the Docker image
         run: docker build . --tag opentuna-build:latest
+
       - name: Run the build in the container
         run: |
           docker run --rm -v "${{ github.workspace }}":/app -w /app \
