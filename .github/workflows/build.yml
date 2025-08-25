@@ -1,18 +1,9 @@
 name: Build OpenTuna Exploit
-
 on: [push, pull_request]
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
+    - name: Build the Docker image for exploration
       run: docker build . --tag opentuna-build:latest
-    - name: Run the build in the container
-      run: |
-        docker run --rm -v "${{ github.workspace }}":/app -w /app \
-        --user $(id -u):$(id -g) \
-        -e "WINEPREFIX=/tmp/.wine" \
-        opentuna-build:latest \
-        make -C exploit

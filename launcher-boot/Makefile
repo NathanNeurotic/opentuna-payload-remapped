@@ -30,11 +30,10 @@ $(EE_BIN_STRIPPED): $(EE_BIN)
 
 	
 $(EE_BIN_PACKED): $(EE_BIN_STRIPPED)
-# Use xvfb-run on non-Windows systems to run ps2_packer via Wine.
 ifdef OS
 	../ps2_packer/ps2_packer.exe -v $< $@
 else
-	xvfb-run wine ../ps2_packer/ps2_packer.exe -v $< $@
+	wine ../ps2_packer/ps2_packer.exe -v $< $@
 endif
 	
 
