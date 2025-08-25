@@ -5,18 +5,18 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ps2dev/ps2dev:latest
+    container: .
     env:
       PS2DEV: /usr/local/ps2dev
       PS2SDK: /usr/local/ps2dev/ps2sdk
       GSKIT: /usr/local/ps2dev/gsKit
-      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ps2dev/bin:/usr/local/ps2dev/ee/bin:/usr/local/ps2dev/iop/bin:/usr/local/ps2dev/dvp/bin:/usr/local/ps2dev/ps2sdk/bin
+      PATH: /usr/local/ps2dev/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ps2dev/ee/bin:/usr/local/ps2dev/iop/bin:/usr/local/ps2dev/dvp/bin:/usr/local/ps2dev/ps2sdk/bin
       LD_LIBRARY_PATH: /usr/lib
       WINEPREFIX: /tmp/.wine
+      DISPLAY: :99
     steps:
     - uses: actions/checkout@v4
-    - name: Install Build Dependencies
-      run: apk add --no-cache make gmp mpfr mpc1 wine xvfb
+    - name: Start Xvfb
+      run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     - name: Build exploit
       run: make -C exploit
