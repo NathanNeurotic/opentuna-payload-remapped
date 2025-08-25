@@ -17,10 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Build Dependencies
-      run: apk add --no-cache make gmp mpfr mpc1 wine xvfb git
-    - name: Clone ps2sdk-ports
-      run: git clone https://github.com/ps2dev/ps2sdk-ports.git
-    - name: Build ps2sdk-ports
-      run: cd ps2sdk-ports && make && make install
+      run: apk add --no-cache make gmp mpfr mpc1 wine xvfb
     - name: Build exploit
       run: make -C exploit
