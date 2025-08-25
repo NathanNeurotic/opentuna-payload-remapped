@@ -33,9 +33,9 @@
  ---------------------------------------------------------------------------
 */
 
-#include <tamtypes.h>
 #include <kernel.h>
 #include <libpad.h>
+#include <stdint.h>
 
 // ntsc_pal
 #define NTSC			2
@@ -44,7 +44,7 @@
 // For video Mode
 extern int VMode;
 
-u32 new_pad;
+uint32_t new_pad;
 
 int  readPad(void);
 void waitAnyPadReady(void);
@@ -54,11 +54,11 @@ int  setupPad(void);
 
 static char padBuf_t[2][256] __attribute__((aligned(64)));
 struct padButtonStatus buttons_t[2];
-u32 padtype_t[2];
-u32 paddata, paddata_t[2];
-u32 old_pad = 0, old_pad_t[2] = {0, 0};
-u32 new_pad_t[2];
-u32 joy_value = 0;
+uint32_t padtype_t[2];
+uint32_t paddata, paddata_t[2];
+uint32_t old_pad = 0, old_pad_t[2] = {0, 0};
+uint32_t new_pad_t[2];
+uint32_t joy_value = 0;
 static int test_joy = 0;
 
 #define PAD_R3_V0 0x010000

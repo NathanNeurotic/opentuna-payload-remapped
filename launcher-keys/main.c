@@ -31,12 +31,12 @@ int  setupPad(void);
 #define DELAY 0
 
 int VMode = NTSC;
-extern u32 new_pad;
+extern uint32_t new_pad;
 
 char romver_region_char[1];
 char ROMVersionNumStr[5];
-u8 romver[16];
-u32 bios_version = 0;
+uint8_t romver[16];
+uint32_t bios_version = 0;
 
 static void wipeUserMem(void)
 {
@@ -117,7 +117,7 @@ int file_exists(char filepath[])
 int main(int argc, char *argv[])
 {
 
-	u32 lastKey = 0;
+        uint32_t lastKey = 0;
 	int isEarlyJap = 0;
 
 	wipeUserMem();
