@@ -101,7 +101,8 @@ int main(int argc, char *argv[])
 
        if (file_exists("mc0:/OPENTUNA/BOOT.ELF"))
                LoadElf("mc0:/OPENTUNA/BOOT.ELF", "mc0:/OPENTUNA/");
-       else if (file_exists("mc1:/OPENTUNA/BOOT.ELF"))
+
+       if (file_exists("mc1:/OPENTUNA/BOOT.ELF"))
                LoadElf("mc1:/OPENTUNA/BOOT.ELF", "mc1:/OPENTUNA/");
 
 	__asm__ __volatile__(
