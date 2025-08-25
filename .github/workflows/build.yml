@@ -12,4 +12,6 @@ jobs:
     - name: Install Build Dependencies
       run: apk add --no-cache make gmp mpfr mpc1 wine
     - name: Build exploit
+      env:
+        WINEPREFIX: /tmp/.wine
       run: make -C exploit
