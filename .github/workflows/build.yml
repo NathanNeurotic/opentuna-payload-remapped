@@ -13,6 +13,7 @@ jobs:
         run: docker build . --tag opentuna-build:latest
 
       - name: Build exploit in container
+        # Run the exploit build inside the Docker container
         run: |
           docker run --rm \
             -v "${{ github.workspace }}":/app -w /app \
