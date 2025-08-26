@@ -21,7 +21,7 @@ Run `make -C exploit clean` to remove generated files.
 
 ### Continuous integration
 A GitHub Actions workflow builds the exploit on each push and pull request. The workflow
-builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-packer`) and runs the build inside a container:
+builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-packer`), runs the build inside a container, and uploads the resulting payload as an artifact:
 
 ```yaml
 - name: Build the Docker image
@@ -35,7 +35,11 @@ builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-pack
       -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \
       opentuna-build:latest \
       bash -lc "make -C exploit"
+- uses: actions/upload-artifact@v4
+  with:
+    name: opentuna-payload
+    path: exploit/payload.bin
 ```
 
-The compiled payload files (such as `payload.bin`) are written to the `exploit/` directory,
-uploaded as workflow artifacts, and automatically attached to GitHub releases.
+The build job ships `exploit/payload.bin` on every run. When a tag is pushed, the artifact
+is downloaded in a release job and attached to the corresponding GitHub release.
