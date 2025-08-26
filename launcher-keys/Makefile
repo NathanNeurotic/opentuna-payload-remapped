@@ -36,6 +36,5 @@ $(EE_BIN_PACKED): $(EE_BIN_STRIPPED)
 
 	
 include $(PS2SDK)/Defs.make
-EE_CFLAGS += -I$(PS2SDK)/ports/include
 include $(PS2SDK)/Rules.make
 

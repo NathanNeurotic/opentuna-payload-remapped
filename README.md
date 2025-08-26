@@ -28,13 +28,10 @@ builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-pack
   run: docker build . --tag opentuna-build:latest
 - name: Build exploit in container
   run: |
-    docker run --rm \
-      -v "${{ github.workspace }}":/app -w /app \
-      -e PS2DEV=/usr/local/ps2dev \
-      -e PS2SDK=/usr/local/ps2dev/ps2sdk \
-      -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \
-      opentuna-build:latest \
-      bash -lc "make -C exploit"
+    docker run --rm \\
+      -v "${{ github.workspace }}":/app -w /app \\
+      opentuna-build:latest \\
+      bash -lc "source /etc/profile && make -C exploit"
 - uses: actions/upload-artifact@v4
   with:
     name: opentuna-payload
