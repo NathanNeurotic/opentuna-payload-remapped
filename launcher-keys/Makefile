@@ -10,7 +10,6 @@ EE_BIN_PACKED= $(EE_TARGET)-packed.elf
 EE_SRCS = main.c pad.c
 EE_LDFLAGS += -Wl,-Ttext=$(LOADADDR),--defsym,_stack_size=$(STACKSIZE),--defsym,_stack=$(STACKADDR),--gc-sections
 EE_LIBS = -lc -lpatches -lpad 
-EE_INCS= -I$(PS2SDK)/ports/include
 EE_CFLAGS += -Os
 
 
@@ -37,5 +36,6 @@ $(EE_BIN_PACKED): $(EE_BIN_STRIPPED)
 
 	
 include $(PS2SDK)/Defs.make
+EE_CFLAGS += -I$(PS2SDK)/ports/include
 include $(PS2SDK)/Rules.make
 
