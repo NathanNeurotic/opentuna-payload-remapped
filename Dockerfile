@@ -15,3 +15,6 @@ RUN make -C /tmp/ps2-packer ps2-packer-lite && \
     cp /tmp/ps2-packer/ps2-packer-lite /usr/local/bin/ps2-packer && \
     rm -rf /tmp/ps2-packer
 
+ENV PS2DEV=/usr/local/ps2dev \
+    PS2SDK=/usr/local/ps2dev/ps2sdk \
+    PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH
