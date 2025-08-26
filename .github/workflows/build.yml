@@ -32,6 +32,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: payload
+          path: .
       - uses: softprops/action-gh-release@fbadcc90e88ecface60a0a0d123795b784ceb239
         # Pinned to commit fbadcc90e88ecface60a0a0d123795b784ceb239 for traceability
         with:
