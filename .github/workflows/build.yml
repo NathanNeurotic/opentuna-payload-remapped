@@ -16,6 +16,9 @@ jobs:
         run: |
           docker run --rm -v "${{ github.workspace }}":/app -w /app \
           -e HOME=/app \
+          -e PS2DEV=/usr/local/ps2dev \
+          -e PS2SDK=/usr/local/ps2dev/ps2sdk \
+          -e PATH=/usr/local/ps2dev/bin:/usr/local/bin:/usr/bin:/bin \
           opentuna-build:latest \
           bash -lc "make -C exploit"
 
