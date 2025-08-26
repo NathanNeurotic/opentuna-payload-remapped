@@ -35,4 +35,6 @@ builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-pack
 ```
 
 The compiled payload files (such as `payload.bin`) are written to the `exploit/` directory
-and are available for download from the workflow run's artifact section.
+and are available for download from the workflow run's artifact section. When a tag is
+pushed, the workflow also creates a GitHub Release and attaches the payload artifact, so
+you can download `payload.bin` directly from the release page.
