@@ -26,12 +26,15 @@ builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-pack
 ```yaml
 - name: Build the Docker image
   run: docker build . --tag opentuna-build:latest
-- name: Run the build in the container
+- name: Build exploit in container
   run: |
     docker run --rm \
       -v "${{ github.workspace }}":/app -w /app \
+      -e PS2DEV=/usr/local/ps2dev \
+      -e PS2SDK=/usr/local/ps2dev/ps2sdk \
+      -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \
       opentuna-build:latest \
-      bash -lc "source /etc/profile && make -C exploit"
+      bash -lc "make -C exploit"
 ```
 
 The compiled payload files (such as `payload.bin`) are written to the `exploit/` directory,
