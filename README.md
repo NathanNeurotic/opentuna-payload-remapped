@@ -21,7 +21,7 @@ Run `make -C exploit clean` to remove generated files.
 
 ### Continuous integration
 A GitHub Actions workflow builds the exploit on each push and pull request. The workflow
-builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-packer`), runs the build inside a container, and uploads the resulting payload as an artifact:
+builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-packer`), runs the build inside a container with the PS2 toolchain preconfigured, and uploads the resulting payload as an artifact:
 
 ```yaml
 - name: Build the Docker image
@@ -29,9 +29,13 @@ builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-pack
 - name: Build exploit in container
   run: |
     docker run --rm \\
-      -v "${{ github.workspace }}":/app -w /app \\
+      -v "${{ github.workspace }}":/app \\
+      -w /app \\
+      -e PS2DEV=/usr/local/ps2dev \\
+      -e PS2SDK=/usr/local/ps2dev/ps2sdk \\
+      -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \\
       opentuna-build:latest \\
-      bash -lc "source /etc/profile && make -C exploit"
+      bash -lc "make -C exploit"
 - uses: actions/upload-artifact@v4
   with:
     name: opentuna-payload
