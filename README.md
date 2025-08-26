@@ -28,13 +28,11 @@ builds a Docker image (which compiles a native `ps2-packer` from `tools/ps2-pack
   run: docker build . --tag opentuna-build:latest
 - name: Run the build in the container
   run: |
-    docker run --rm -v "${{ github.workspace }}":/app -w /app \
-    -e HOME=/app \
-    opentuna-build:latest \
-    bash -lc "make -C exploit"
+    docker run --rm \
+      -v "${{ github.workspace }}":/app -w /app \
+      opentuna-build:latest \
+      bash -lc "source /etc/profile && make -C exploit"
 ```
 
-The compiled payload files (such as `payload.bin`) are written to the `exploit/` directory
-and are available for download from the workflow run's artifact section. When a tag is
-pushed, the workflow also creates a GitHub Release and attaches the payload artifact, so
-you can download `payload.bin` directly from the release page.
+The compiled payload files (such as `payload.bin`) are written to the `exploit/` directory,
+uploaded as workflow artifacts, and automatically attached to GitHub releases.
