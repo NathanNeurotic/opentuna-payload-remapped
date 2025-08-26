@@ -15,14 +15,9 @@ jobs:
       - name: Build exploit in container
         run: |
           docker run --rm \
-            -v "${{ github.workspace }}":/app \
-            -w /app \
-            -e HOME=/app \
-            -e PS2DEV=/usr/local/ps2dev \
-            -e PS2SDK=/usr/local/ps2dev/ps2sdk \
-            -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \
+            -v "${{ github.workspace }}":/app -w /app \
             opentuna-build:latest \
-            bash -lc "make -C exploit"
+            bash -lc "source /etc/profile && make -C exploit"
 
       - uses: actions/upload-artifact@v4
         with:
