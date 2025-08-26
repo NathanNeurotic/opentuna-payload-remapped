@@ -1,4 +1,4 @@
-FROM ps2dev/ps2dev:latest
+FROM docker.io/ps2dev/ps2dev:latest
 
 RUN apk add --no-cache \
     git \
@@ -6,6 +6,7 @@ RUN apk add --no-cache \
     zlib-dev \
     bash
 
+# Install PS2SDK
 RUN git clone --depth=1 https://github.com/ps2dev/ps2sdk.git /tmp/ps2sdk \
     && cd /tmp/ps2sdk && make install \
     && rm -rf /tmp/ps2sdk
