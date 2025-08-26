@@ -9,15 +9,11 @@
 #include <time.h>
 #include <string.h>
 #include <libcdvd.h>
-
 #include <fcntl.h>
 #include <sbv_patches.h>
 #include <libpad.h>
-#include <stdio.h>
 #include <debug.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
 
 // Forward declarations for pad functions
@@ -131,8 +127,23 @@ int main(int argc, char *argv[])
 		close(fdnr);
 	}
 
-	// Getting region char
-	romver_region_char[0] = (romver[4] == 'E' ? 'E' : (romver[4] == 'J' ? 'I' : (romver[4] == 'H' ? 'A' : (romver[4] == 'U' ? 'A' : romver[4]))));
+        // Getting region char
+        switch (romver[4])
+        {
+        case 'E':
+                romver_region_char[0] = 'E';
+                break;
+        case 'J':
+                romver_region_char[0] = 'I';
+                break;
+        case 'H':
+        case 'U':
+                romver_region_char[0] = 'A';
+                break;
+        default:
+                romver_region_char[0] = romver[4];
+                break;
+        }
 
 	strncpy(ROMVersionNumStr, (const char*)romver, 4);
 	ROMVersionNumStr[4] = '\0';
