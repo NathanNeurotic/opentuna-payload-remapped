@@ -1,9 +1,8 @@
 FROM ps2dev/ps2dev:latest
 
 RUN apk add --no-cache \
-    make \
-    gcc \
-    libc-dev \
+    git \
+    build-base \
     zlib-dev \
     bash
 
