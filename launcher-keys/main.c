@@ -98,9 +98,9 @@ void LoadElf(char *filename, char *party)
 	}
 }
 
-int file_exists(char filepath[])
+int file_exists(const char *filepath)
 {
-	int fdn;
+        int fdn;
 
 	fdn = open(filepath, O_RDONLY);
 	if (fdn < 0)
