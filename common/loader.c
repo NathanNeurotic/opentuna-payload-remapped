@@ -4,9 +4,9 @@
 #include <kernel.h>
 #include <sifrpc.h>
 #include <loadfile.h>
-#include <fileXio_rpc.h>
 #include <sbv_patches.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 void wipeUserMem(void)
 {
@@ -38,11 +38,11 @@ void InitPS2(void)
         ResetIOP();
         SifInitIopHeap();
         SifLoadFileInit();
-        fileXioInit();
         sbv_patch_disable_prefix_check();
         SifLoadModule("rom0:SIO2MAN", 0, NULL);
         SifLoadModule("rom0:MCMAN", 0, NULL);
         SifLoadModule("rom0:MCSERV", 0, NULL);
+        SifLoadModule("rom0:FILEXIO", 0, NULL);
 }
 
 void LoadElf(char *filename, char *party)
@@ -71,10 +71,10 @@ int file_exists(char filepath[])
 {
         int fdn;
 
-        fdn = fileXioOpen(filepath, O_RDONLY);
+        fdn = open(filepath, O_RDONLY);
         if (fdn < 0)
                 return 0;
-        fileXioClose(fdn);
+        close(fdn);
 
         return 1;
 }
