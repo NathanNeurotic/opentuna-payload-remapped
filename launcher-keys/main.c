@@ -4,7 +4,7 @@
 #include <kernel.h>
 #include <sifrpc.h>
 #include <loadfile.h>
-#include <stdio.h>
+#include <fileXio_rpc.h>
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
@@ -13,11 +13,8 @@
 #include <fcntl.h>
 #include <sbv_patches.h>
 #include <libpad.h>
-#include <stdio.h>
 #include <debug.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
 
 #define NTSC 2
@@ -64,7 +61,7 @@ void InitPS2()
 	ResetIOP();
 	SifInitIopHeap();
 	SifLoadFileInit();
-	fioInit();
+        fileXioInit();
 	sbv_patch_disable_prefix_check();
 	SifLoadModule("rom0:SIO2MAN", 0, NULL);
 	SifLoadModule("rom0:MCMAN", 0, NULL);
@@ -102,10 +99,10 @@ int file_exists(char filepath[])
 {
 	int fdn;
 
-	fdn = open(filepath, O_RDONLY);
-	if (fdn < 0)
-		return 0;
-	close(fdn);
+    fdn = fileXioOpen(filepath, O_RDONLY);
+    if (fdn < 0)
+        return 0;
+    fileXioClose(fdn);
 
 	return 1;
 }
@@ -121,11 +118,11 @@ int main(int argc, char *argv[])
 	InitPS2();
 
 	int fdnr;
-	if ((fdnr = open("rom0:ROMVER", O_RDONLY)) > 0)
-	{ // Reading ROMVER
-		read(fdnr, romver, sizeof romver);
-		close(fdnr);
-	}
+    if ((fdnr = fileXioOpen("rom0:ROMVER", O_RDONLY)) > 0)
+    { // Reading ROMVER
+            fileXioRead(fdnr, romver, sizeof romver);
+            fileXioClose(fdnr);
+    }
 
 	// Getting region char
 	romver_region_char[0] = (romver[4] == 'E' ? 'E' : (romver[4] == 'J' ? 'I' : (romver[4] == 'H' ? 'A' : (romver[4] == 'U' ? 'A' : romver[4]))));

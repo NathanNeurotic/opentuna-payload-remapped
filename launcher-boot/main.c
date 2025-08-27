@@ -4,7 +4,7 @@
 #include <kernel.h>
 #include <sifrpc.h>
 #include <loadfile.h>
-#include <stdio.h>
+#include <fileXio_rpc.h>
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
@@ -13,7 +13,6 @@
 #include <fcntl.h>
 #include <sbv_patches.h>
 
-#include <stdio.h>
 #include <debug.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -51,7 +50,7 @@ void InitPS2()
 	ResetIOP();
 	SifInitIopHeap();
 	SifLoadFileInit();
-	fioInit();
+        fileXioInit();
 	sbv_patch_disable_prefix_check();
 	SifLoadModule("rom0:SIO2MAN", 0, NULL);
 	SifLoadModule("rom0:MCMAN", 0, NULL);
@@ -85,10 +84,10 @@ int file_exists(char filepath[])
 {
 	int fdn;
 
-	fdn = open(filepath, O_RDONLY);
-	if (fdn < 0)
-		return 0;
-	close(fdn);
+        fdn = fileXioOpen(filepath, O_RDONLY);
+        if (fdn < 0)
+                return 0;
+        fileXioClose(fdn);
 
 	return 1;
 }
