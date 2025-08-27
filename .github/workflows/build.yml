@@ -1,0 +1,40 @@
+---
+name: Build OpenTuna Exploit
+
+'on': [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build exploit in container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}":/app \
+            -w /app \
+            -e PS2DEV=/usr/local/ps2dev \
+            -e PS2SDK=/usr/local/ps2dev/ps2sdk \
+            -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \
+            ps2dev/ps2dev:latest \
+            bash -lc "make -C tools/ps2-packer ps2-packer-lite && cp tools/ps2-packer/ps2-packer-lite /usr/local/bin/ps2-packer && make -C exploit"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: opentuna-payload
+          path: exploit/payload.bin
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: opentuna-payload
+          path: .
+      - uses: softprops/action-gh-release@fbadcc90e88ecface60a0a0d123795b784ceb239
+        # Pinned to commit fbadcc90e88ecface60a0a0d123795b784ceb239 for traceability
+        with:
+          files: payload.bin

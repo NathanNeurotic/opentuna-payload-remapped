@@ -51,7 +51,6 @@ void InitPS2()
 	ResetIOP();
 	SifInitIopHeap();
 	SifLoadFileInit();
-	fioInit();
 	sbv_patch_disable_prefix_check();
 	SifLoadModule("rom0:SIO2MAN", 0, NULL);
 	SifLoadModule("rom0:MCMAN", 0, NULL);
@@ -81,9 +80,9 @@ void LoadElf(char *filename, char *party)
 	}
 }
 
-int file_exists(char filepath[])
+int file_exists(const char *filepath)
 {
-	int fdn;
+        int fdn;
 
 	fdn = open(filepath, O_RDONLY);
 	if (fdn < 0)

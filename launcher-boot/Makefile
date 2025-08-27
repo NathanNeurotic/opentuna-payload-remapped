@@ -7,11 +7,10 @@ EE_TARGET=payload
 EE_BIN = $(EE_TARGET).elf
 EE_BIN_STRIPPED = $(EE_TARGET)-stripped.elf
 EE_BIN_PACKED= $(EE_TARGET)-packed.elf
-EE_OBJS = main.o       
-EE_LDFLAGS +=   -Wl,--gc-sections  -Wl,-Ttext -Wl,$(LOADADDR)  -Wl,--defsym -Wl,_stack_size=$(STACKSIZE) -Wl,--defsym -Wl,_stack=$(STACKADDR)
+EE_SRCS = main.c
+EE_LDFLAGS += -Wl,-Ttext=$(LOADADDR),--defsym,_stack_size=$(STACKSIZE),--defsym,_stack=$(STACKADDR),--gc-sections
 EE_LIBS = -lc -lpatches 
-EE_INCS= -I$(GSKIT)/include -I$(PS2SDK)/ports/include
-EE_CFLAGS=-Os 
+EE_CFLAGS += -Os
 
 
 
@@ -30,16 +29,12 @@ $(EE_BIN_STRIPPED): $(EE_BIN)
 
 	
 $(EE_BIN_PACKED): $(EE_BIN_STRIPPED)
-ifdef OS
-	../ps2_packer/ps2_packer.exe -v $< $@
-else
-	wine ../ps2_packer/ps2_packer.exe -v $< $@
-endif
+	ps2-packer -v $< $@
 	
 
 
 
 	
-include $(PS2SDK)/samples/Makefile.pref
-include $(PS2SDK)/samples/Makefile.eeglobal
+include $(PS2SDK)/Defs.make
+include $(PS2SDK)/Rules.make
 

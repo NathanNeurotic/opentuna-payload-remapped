@@ -9,16 +9,17 @@
 #include <time.h>
 #include <string.h>
 #include <libcdvd.h>
-
 #include <fcntl.h>
 #include <sbv_patches.h>
 #include <libpad.h>
-#include <stdio.h>
 #include <debug.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
+
+// Forward declarations for pad functions
+int  readPad(void);
+void waitAnyPadReady(void);
+int  setupPad(void);
 
 #define NTSC 2
 #define PAL 3
@@ -26,12 +27,12 @@
 #define DELAY 0
 
 int VMode = NTSC;
-extern u32 new_pad;
+extern uint32_t new_pad;
 
 char romver_region_char[1];
 char ROMVersionNumStr[5];
-u8 romver[16];
-u32 bios_version = 0;
+uint8_t romver[16];
+uint32_t bios_version = 0;
 
 static void wipeUserMem(void)
 {
@@ -64,7 +65,6 @@ void InitPS2()
 	ResetIOP();
 	SifInitIopHeap();
 	SifLoadFileInit();
-	fioInit();
 	sbv_patch_disable_prefix_check();
 	SifLoadModule("rom0:SIO2MAN", 0, NULL);
 	SifLoadModule("rom0:MCMAN", 0, NULL);
@@ -98,9 +98,9 @@ void LoadElf(char *filename, char *party)
 	}
 }
 
-int file_exists(char filepath[])
+int file_exists(const char *filepath)
 {
-	int fdn;
+        int fdn;
 
 	fdn = open(filepath, O_RDONLY);
 	if (fdn < 0)
@@ -113,7 +113,7 @@ int file_exists(char filepath[])
 int main(int argc, char *argv[])
 {
 
-	u32 lastKey = 0;
+        uint32_t lastKey = 0;
 	int isEarlyJap = 0;
 
 	wipeUserMem();
@@ -127,14 +127,29 @@ int main(int argc, char *argv[])
 		close(fdnr);
 	}
 
-	// Getting region char
-	romver_region_char[0] = (romver[4] == 'E' ? 'E' : (romver[4] == 'J' ? 'I' : (romver[4] == 'H' ? 'A' : (romver[4] == 'U' ? 'A' : romver[4]))));
+        // Getting region char
+        switch (romver[4])
+        {
+        case 'E':
+                romver_region_char[0] = 'E';
+                break;
+        case 'J':
+                romver_region_char[0] = 'I';
+                break;
+        case 'H':
+        case 'U':
+                romver_region_char[0] = 'A';
+                break;
+        default:
+                romver_region_char[0] = romver[4];
+                break;
+        }
 
-	strncpy(ROMVersionNumStr, romver, 4);
+	strncpy(ROMVersionNumStr, (const char*)romver, 4);
 	ROMVersionNumStr[4] = '\0';
 	bios_version = strtoul(ROMVersionNumStr, NULL, 16);
 
-	if ((romver_region_char[0] == 'J') && (bios_version <= 0x120))
+	if ((romver_region_char[0] == 'I') && (bios_version <= 0x120))
 		isEarlyJap = 1;
 
 	//Stores last key during DELAY msec
