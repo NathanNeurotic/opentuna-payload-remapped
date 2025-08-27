@@ -9,9 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build the Docker image
-        run: docker build . --tag opentuna-build:latest
-
       - name: Build exploit in container
         run: |
           docker run --rm \
@@ -20,8 +17,8 @@ jobs:
             -e PS2DEV=/usr/local/ps2dev \
             -e PS2SDK=/usr/local/ps2dev/ps2sdk \
             -e PATH=/usr/local/ps2dev/bin:/usr/local/ps2dev/ps2sdk/bin:$PATH \
-            opentuna-build:latest \
-            bash -lc "make -C exploit"
+            ps2dev/ps2dev:latest \
+            bash -lc "make -C tools/ps2-packer ps2-packer-lite && cp tools/ps2-packer/ps2-packer-lite /usr/local/bin/ps2-packer && make -C exploit"
 
       - uses: actions/upload-artifact@v4
         with:
