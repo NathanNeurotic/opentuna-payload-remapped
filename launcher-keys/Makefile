@@ -19,12 +19,13 @@ clean:
 $(EE_BIN_STRIPPED): $(EE_BIN)
 	$(EE_STRIP) -s -R .comment -R .gnu.version --strip-unneeded -o $@ $<
 
-$(EE_BIN_PACKED): $(EE_BIN_STRIPPED)
-ifdef OS
-	../ps2_packer/ps2_packer.exe -v $< $@
-else
-	wine ../ps2_packer/ps2_packer.exe -v $< $@
-endif
+PS2_PACKER = ../ps2-packer/ps2-packer
+
+$(EE_BIN_PACKED): $(EE_BIN_STRIPPED) $(PS2_PACKER)
+	$(PS2_PACKER) -v $< $@
+
+$(PS2_PACKER):
+	$(MAKE) -C $(dir $(PS2_PACKER)) ps2-packer
 
 include $(PS2SDK)/Defs.make
 include $(PS2SDK)/samples/Makefile.eeglobal
