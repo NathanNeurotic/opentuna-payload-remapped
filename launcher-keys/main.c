@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
 	ROMVersionNumStr[4] = '\0';
 	bios_version = strtoul(ROMVersionNumStr, NULL, 16);
 
-	if ((romver_region_char[0] == 'J') && (bios_version <= 0x120))
+	if ((romver_region_char[0] == 'I') && (bios_version <= 0x120))
 		isEarlyJap = 1;
 
 	//Stores last key during DELAY msec
