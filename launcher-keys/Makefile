@@ -7,7 +7,7 @@ EE_BIN_STRIPPED = payload-stripped.elf
 EE_BIN_PACKED = payload-packed.elf
 EE_OBJS = main.o pad.o
 EE_LDFLAGS += -Wl,--gc-sections -Wl,-Ttext -Wl,$(LOADADDR) -Wl,--defsym -Wl,_stack_size=$(STACKSIZE) -Wl,--defsym -Wl,_stack=$(STACKADDR)
-EE_LIBS += -lpatches -lpad
+EE_LIBS += -lpatches -lpad -lfileXio
 EE_INCS += -I$(GSKIT)/include -I$(PS2SDK)/ports/include
 EE_CFLAGS += -Os
 
