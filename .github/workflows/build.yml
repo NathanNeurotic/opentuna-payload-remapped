@@ -1,34 +1,28 @@
+---
 name: Build
 
-on:
-  push:
-  pull_request:
+'on':
+  push: {}
+  pull_request: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ps2dev/ps2dev
+    container: ps2dev/ps2dev:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install make
-        run: apt-get update && apt-get install -y make
-      - name: Install ps2-packer
-        run: |
-          if ! command -v ps2-packer >/dev/null 2>&1; then
-            make -C ps2-packer
-            make -C ps2-packer install
-          fi
-      - name: Build exploit
-        run: make -C exploit
+      - name: Set GSKIT environment
+        run: echo "GSKIT=$PS2DEV/gsKit" >> $GITHUB_ENV
+      - name: Build ps2-packer
+        run: make -C ps2-packer ps2-packer
       - name: Build launcher-boot
         run: make -C launcher-boot
       - name: Build launcher-keys
         run: make -C launcher-keys
+      - name: Build exploit
+        run: make -C exploit
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: elf-artifacts
-          path: |
-            exploit/*.elf
-            launcher-boot/*.elf
-            launcher-keys/*.elf
+          path: "**/*.elf"
