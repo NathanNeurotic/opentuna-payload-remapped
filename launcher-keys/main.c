@@ -1,4 +1,4 @@
-#include <tamtypes.h>
+#include <stdint.h>
 #include <loadfile.h>
 #include <fileXio_rpc.h>
 #include <libpad.h>
@@ -7,22 +7,26 @@
 #include <fcntl.h>
 #include "../common/loader.h"
 
+int readPad(void);
+void waitAnyPadReady(void);
+int setupPad(void);
+
 #define NTSC 2
 #define PAL 3
 
 #define DELAY 0
 
 int VMode = NTSC;
-extern u32 new_pad;
+extern uint32_t new_pad;
 
 char romver_region_char[1];
 char ROMVersionNumStr[5];
-u8 romver[16];
-u32 bios_version = 0;
+uint8_t romver[16];
+uint32_t bios_version = 0;
 
 int main(int argc, char *argv[])
 {
-        u32 lastKey = 0;
+        uint32_t lastKey = 0;
         int isEarlyJap = 0;
 
         wipeUserMem();
