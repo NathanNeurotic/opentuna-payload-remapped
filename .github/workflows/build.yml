@@ -11,6 +11,8 @@ jobs:
     container: ps2dev/ps2dev:latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install build tools
+        run: apk add --no-cache build-base
       - name: Set GSKIT environment
         run: echo "GSKIT=$PS2DEV/gsKit" >> $GITHUB_ENV
       - name: Build ps2-packer

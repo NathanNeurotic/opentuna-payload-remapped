@@ -24,6 +24,7 @@ export PATH="$PATH:$PS2DEV/bin"
 Each component of the project has its own `Makefile`. Build them individually from the repository root:
 
 ```bash
+make -C ps2-packer ps2-packer   # builds the host-side packer once
 make -C launcher-boot
 make -C launcher-keys
 make -C exploit            # builds using PAYLOAD=launcher-keys by default
@@ -38,5 +39,5 @@ make -C exploit PAYLOAD=launcher-boot
 ### Continuous Integration
 This repository uses a GitHub Actions workflow defined in `.github/workflows/build.yml` to build the project inside the
 `ps2dev/ps2dev` Docker image.
-The workflow installs `ps2-packer` when needed, runs `make` in the `exploit`, `launcher-boot`, and `launcher-keys` directories, and uploads the resulting `.elf` binaries as artifacts for every push and pull request.
+The workflow installs the necessary host build tools, builds `ps2-packer`, runs `make` in the `exploit`, `launcher-boot`, and `launcher-keys` directories, and uploads the resulting `.elf` binaries as artifacts for every push and pull request.
 
