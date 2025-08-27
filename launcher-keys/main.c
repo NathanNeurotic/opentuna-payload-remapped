@@ -26,6 +26,9 @@ uint32_t bios_version = 0;
 
 int main(int argc, char *argv[])
 {
+        (void)argc;
+        (void)argv;
+
         uint32_t lastKey = 0;
         int isEarlyJap = 0;
 

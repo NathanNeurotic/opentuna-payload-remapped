@@ -9,7 +9,7 @@ EE_OBJS = main.o ../common/loader.o
 EE_LDFLAGS += -Wl,--gc-sections -Wl,-Ttext -Wl,$(LOADADDR) -Wl,--defsym -Wl,_stack_size=$(STACKSIZE) -Wl,--defsym -Wl,_stack=$(STACKADDR)
 EE_LIBS += -lpatches
 EE_INCS += -I$(GSKIT)/include -I$(PS2SDK)/ports/include
-EE_CFLAGS += -Os
+EE_CFLAGS += -Os -Wall -Wextra -Werror -Wpedantic
 
 all: $(EE_BIN_PACKED)
 
