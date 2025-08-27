@@ -1,10 +1,10 @@
 #include <stdint.h>
 #include <loadfile.h>
-#include <fileXio_rpc.h>
 #include <libpad.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include "../common/loader.h"
 
 int readPad(void);
@@ -38,10 +38,10 @@ int main(int argc, char *argv[])
         waitAnyPadReady();
 
         int fdnr;
-        if ((fdnr = fileXioOpen("rom0:ROMVER", O_RDONLY)) > 0)
+        if ((fdnr = open("rom0:ROMVER", O_RDONLY)) > 0)
         { // Reading ROMVER
-                fileXioRead(fdnr, romver, sizeof romver);
-                fileXioClose(fdnr);
+                read(fdnr, romver, sizeof romver);
+                close(fdnr);
         }
 
         // Getting region char
