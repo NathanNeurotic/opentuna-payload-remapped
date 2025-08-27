@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
                         LoadElf("mc0:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
 
                 if (file_exists("mc1:/APPS/OPNPS2LD.ELF"))
-                        LoadElf("mc1:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
+                        LoadElf("mc1:/APPS/OPNPS2LD.ELF", "mc1:/APPS/");
         }
         else
         {
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
                         LoadElf("mc0:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
 
                 if (file_exists("mc1:/APPS/OPNPS2LD.ELF"))
-                        LoadElf("mc1:/APPS/OPNPS2LD.ELF", "mc0:/APPS/");
+                        LoadElf("mc1:/APPS/OPNPS2LD.ELF", "mc1:/APPS/");
 
                 if (file_exists("mc0:/APPS/ULE.ELF"))
                         LoadElf("mc0:/APPS/ULE.ELF", "mc0:/APPS/");
