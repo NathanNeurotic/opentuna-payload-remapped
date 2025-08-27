@@ -10,6 +10,8 @@ jobs:
     container: ps2dev/ps2dev
     steps:
       - uses: actions/checkout@v4
+      - name: Install make
+        run: apt-get update && apt-get install -y make
       - name: Install ps2-packer
         run: |
           if ! command -v ps2-packer >/dev/null 2>&1; then
