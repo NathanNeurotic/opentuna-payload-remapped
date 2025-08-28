@@ -1,7 +1,7 @@
 /* This is the main stub file for ps2-packer */
 
 #include <tamtypes.h>
-#include <kernel.h>
+#include "../../compat/compat.h"
 
 #ifdef DEBUG
 #include <sifrpc.h>

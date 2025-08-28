@@ -1,5 +1,7 @@
 PREFIX = $(PS2DEV)
 
+include ../mk/toolchain.mk
+
 SUBMAKE = $(MAKE) -C
 SHELL = /bin/sh
 SYSTEM = $(shell uname)
@@ -14,7 +16,7 @@ endif
 LZMA_CPPFLAGS = -I common/lzma
 VERSION = 1.1.0
 BIN2C = $(PS2SDK)/bin/bin2c
-CPPFLAGS := -O3 -Wall -I. -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\" $(CPPFLAGS)
+CPPFLAGS += -O3 -I. -DVERSION=\"$(VERSION)\" -DPREFIX=\"$(PREFIX)\"
 INSTALL = install
 
 ifeq ($(SYSTEM),Darwin)

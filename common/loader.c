@@ -1,7 +1,7 @@
 #include "loader.h"
 #include <iopcontrol.h>
 #include <iopheap.h>
-#include <kernel.h>
+#include "../compat/compat.h"
 #include <sifrpc.h>
 #include <loadfile.h>
 #include <sbv_patches.h>

@@ -36,8 +36,13 @@ The exploit embeds one of the launcher payloads. Override the payload by passing
 make -C exploit PAYLOAD=launcher-boot
 ```
 
+After building all components you can run a simple smoke test:
+
+```bash
+./scripts/ci-smoke.sh local
+```
+
 ### Continuous Integration
-This repository uses a GitHub Actions workflow defined in `.github/workflows/build.yml` to build the project inside the
-`ps2dev/ps2dev` Docker image.
-The workflow installs the necessary host build tools, builds `ps2-packer`, runs `make` in the `exploit`, `launcher-boot`, and `launcher-keys` directories, and uploads the resulting `.elf` binaries as artifacts for every push and pull request.
+This repository uses a GitHub Actions workflow defined in `.github/workflows/ci.yml` to build the project inside the
+`ps2dev/ps2dev:v1.3.0` Docker image. The workflow runs `scripts/ci-smoke.sh` which builds all components, verifies the produced binaries and uploads them as artifacts for every push and pull request.
 

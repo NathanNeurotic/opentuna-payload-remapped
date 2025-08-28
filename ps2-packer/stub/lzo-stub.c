@@ -1,6 +1,6 @@
 /* This is the lzo uncompression stub for ps2-packer */
 
-#include <kernel.h>
+#include "../../compat/compat.h"
 #include "packer-stub.h"
 #include "minilzo.h"
 

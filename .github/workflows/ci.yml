@@ -1,28 +1,27 @@
----
-name: Build
+name: CI
 
-'on':
-  push: {}
-  pull_request: {}
+on:
+  push:
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ps2dev/ps2dev:latest
+    container: ps2dev/ps2dev:v1.3.0
     steps:
       - uses: actions/checkout@v4
       - name: Install build tools
         run: apk add --no-cache build-base
       - name: Set GSKIT environment
         run: echo "GSKIT=$PS2DEV/gsKit" >> $GITHUB_ENV
-      - name: Build ps2-packer
-        run: make -C ps2-packer ps2-packer
-      - name: Build launcher-boot
-        run: make -C launcher-boot
-      - name: Build launcher-keys
-        run: make -C launcher-keys
-      - name: Build exploit
-        run: make -C exploit
+      - name: Cache ps2-packer
+        id: cache-ps2-packer
+        uses: actions/cache@v4
+        with:
+          path: ps2-packer/ps2-packer
+          key: ${{ runner.os }}-ps2-packer-${{ hashFiles('ps2-packer/**') }}
+      - name: Build and test
+        run: ./scripts/ci-smoke.sh
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:

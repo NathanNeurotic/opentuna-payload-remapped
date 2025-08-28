@@ -5,10 +5,9 @@ STACKSIZE = 0x04000
 EE_BIN = payload.elf
 EE_BIN_STRIPPED = payload-stripped.elf
 EE_BIN_PACKED = payload-packed.elf
-EE_OBJS = main.o pad.o ../common/loader.o
+EE_OBJS = main.o pad.o ../common/loader.o ../compat/compat.o
 EE_LDFLAGS += -Wl,--gc-sections -Wl,-Ttext -Wl,$(LOADADDR) -Wl,--defsym -Wl,_stack_size=$(STACKSIZE) -Wl,--defsym -Wl,_stack=$(STACKADDR)
 EE_LIBS += -lpatches -lpad
-EE_INCS += -I$(GSKIT)/include -I$(PS2SDK)/ports/include
 EE_CFLAGS += -Os
 
 all: $(EE_BIN_PACKED)
@@ -27,5 +26,6 @@ $(EE_BIN_PACKED): $(EE_BIN_STRIPPED) $(PS2_PACKER)
 $(PS2_PACKER):
 	$(MAKE) -C $(dir $(PS2_PACKER)) ps2-packer
 
+include ../mk/toolchain.mk
 include $(PS2SDK)/Defs.make
 include $(PS2SDK)/samples/Makefile.eeglobal

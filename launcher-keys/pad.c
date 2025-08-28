@@ -35,7 +35,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <kernel.h>
+#include "../compat/compat.h"
 #include <libpad.h>
 
 // ntsc_pal

@@ -302,9 +302,9 @@ void load_stub(
     int loaded = 0;
 
 #ifndef PS2_PACKER_LITE
-    int size;
+    size_t size;
     fseek(stub, 0, SEEK_END);
-    size = ftell(stub);
+    size = (size_t)ftell(stub);
     fseek(stub, 0, SEEK_SET);
 
     loadbuf = (u8 *) malloc(size);
@@ -435,7 +435,7 @@ void prepare_out(FILE * out, u32 base) {
    program headers of the input file */
 void packing(FILE * out, FILE * in, u32 base) {
     u8 * loadbuf, * pdata, * packed = 0;
-    int size, packed_size = 0;
+    size_t size, packed_size = 0;
     u32 section_size;
     int i;
     elf_header_t *eh = 0;
@@ -457,7 +457,7 @@ void packing(FILE * out, FILE * in, u32 base) {
     weph.align = alignment;
 
     fseek(in, 0, SEEK_END);
-    size = ftell(in);
+    size = (size_t)ftell(in);
     fseek(in, 0, SEEK_SET);
 
     loadbuf = (u8 *) malloc(size);
@@ -509,21 +509,21 @@ void packing(FILE * out, FILE * in, u32 base) {
 	printv("Loaded section: %08X bytes (with %08X zeroes) based at %08X\n", psh.originalSize, psh.zeroByteSize, psh.virtualAddr);
 
 #ifndef PS2_PACKER_LITE
-	packed_size = ppack_section(pdata, &packed, section_size);
+        packed_size = (size_t)ppack_section(pdata, &packed, section_size);
 #else
-	packed_size = pack_section(pdata, &packed, section_size);
+        packed_size = (size_t)pack_section(pdata, &packed, section_size);
 #endif
-	psh.compressedSize = packed_size;
+        psh.compressedSize = (u32)packed_size;
 
-	printv("Section packed, from %u to %u bytes, ratio = %5.2f%%\n", section_size, packed_size, 100.0 * (int) (section_size - packed_size) / section_size);
+        printv("Section packed, from %u to %zu bytes, ratio = %5.2f%%\n", section_size, packed_size, 100.0 * (int) (section_size - packed_size) / section_size);
 
 	SWAP_PACKED_SECTION_HEADER(psh);
-	if (fwrite(&psh, 1, sizeof(psh), out) != sizeof(psh))
-	    printe("Error writing packed section header.\n");
-	weph.filesz += sizeof(psh);
-	if (fwrite(packed, 1, packed_size, out) != packed_size)
-	    printe("Error writing packed section.\n");
-	weph.filesz += packed_size;
+        if (fwrite(&psh, 1, sizeof(psh), out) != sizeof(psh))
+            printe("Error writing packed section header.\n");
+        weph.filesz += sizeof(psh);
+        if (fwrite(packed, 1, packed_size, out) != packed_size)
+            printe("Error writing packed section.\n");
+        weph.filesz += (u32)packed_size;
 	while (weph.filesz & 3) {
 	    weph.filesz++;
 	    fwrite(&zero, 1, 1, out);
@@ -739,8 +739,13 @@ int main(int argc, char ** argv) {
 #ifndef PS2_PACKER_LITE
     printv("Opening packer %s.\n", packer_dll);
     packer_module = open_module(packer_dll);
-    ppack_section = get_symbol(packer_module, "pack_section");
-    signature = get_symbol(packer_module, "signature");
+    {
+        void *sym;
+        sym = get_symbol(packer_module, "pack_section");
+        memcpy(&ppack_section, &sym, sizeof(ppack_section));
+        sym = get_symbol(packer_module, "signature");
+        memcpy(&signature, &sym, sizeof(signature));
+    }
     if (signature() != stub_signature) {
 	printe("Packer's signature and stub's signature are not matching.\n");
     }
