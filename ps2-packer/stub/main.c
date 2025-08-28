@@ -2,6 +2,7 @@
 
 #include <tamtypes.h>
 #include <kernel.h>
+#include <sbv_patches.h>
 
 #ifdef DEBUG
 #include <sifrpc.h>
