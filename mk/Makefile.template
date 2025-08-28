@@ -1,0 +1,29 @@
+# PS2SDK Makefile Template
+
+# This template provides a modern, standard way to build PS2 ELF files.
+# It should be included by project Makefiles after they have defined their
+# project-specific variables (e.g., EE_OBJS, EE_LIBS).
+
+# Default compiler flags. Projects can add to this.
+EE_CFLAGS += -O2 -G0 -Wall -Wextra -Werror
+
+# Default include paths.
+EE_INCS += -I. -I$(PS2SDK)/ee/include -I$(PS2SDK)/common/include
+
+# Default library paths.
+EE_LDFLAGS += -L$(PS2SDK)/ee/lib
+
+# Include the main ps2sdk makefiles.
+# This defines the compiler variables (EE_CC, etc.) and provides
+# the core compilation rules.
+include $(PS2SDK)/Defs.make
+include $(PS2SDK)/samples/Makefile.eeglobal
+
+# Generic rule to link the elf.
+# This assumes that the project Makefile has defined EE_BIN and EE_OBJS.
+$(EE_BIN): $(EE_OBJS)
+	$(EE_CC) -o $@ $(EE_OBJS) $(EE_LDFLAGS) $(EE_LIBS)
+
+# Generic clean rule.
+clean:
+	rm -f $(EE_BIN) $(EE_OBJS)

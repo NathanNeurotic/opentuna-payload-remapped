@@ -1,14 +1,14 @@
 #!/bin/sh
 set -e
 
+# This script is intended to be run from the root of the repository.
+# It can be run locally or in a CI environment.
+
 # Set up toolchain environment if not already set
 export PS2DEV=${PS2DEV:-/usr/local/ps2dev}
 export PS2SDK=${PS2SDK:-$PS2DEV/ps2sdk}
 export GSKIT=${GSKIT:-$PS2DEV/gsKit}
 export PATH=$PATH:$PS2DEV/bin
-
-# This script is intended to be run from the root of the repository.
-# It can be run locally or in a CI environment.
 
 # --- Build everything ---
 echo "Building ps2-packer..."

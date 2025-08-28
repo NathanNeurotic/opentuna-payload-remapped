@@ -1,5 +1,3 @@
-SUBMAKE = $(MAKE) -C
-
 EE_CFLAGS += -G0 -O3 -Wall -Werror -DDO_EXECPS2
 EE_LDFLAGS += -T ./linkfile -lc_nano -lkernel
 EE_INCS += -I . -I zlib -I lzo -I lz4 -I ../common/lzma
@@ -25,19 +23,19 @@ dist: $(TARGETS)
 	ee-strip $(TARGETS)
 
 zlib-tag.stamp:
-	$(SUBMAKE) zlib
+	$(MAKE) -C zlib
 	touch zlib-tag.stamp
 
 lzo-tag.stamp:
-	$(SUBMAKE) lzo
+	$(MAKE) -C lzo
 	touch lzo-tag.stamp
 
 lz4-tag.stamp:
-	$(SUBMAKE) lz4
+	$(MAKE) -C lz4
 	touch lz4-tag.stamp
 
 lzma-tag.stamp:
-	$(SUBMAKE) lzma
+	$(MAKE) -C lzma
 	touch lzma-tag.stamp
 
 
@@ -116,14 +114,13 @@ lzma-kmode-0088-stub: main-kmode.o lzma-stub.o lzma-tag.stamp
 lzma-kmode-1d00-stub: main-kmode.o lzma-stub.o lzma-tag.stamp
 	$(EE_CC) -nostartfiles ./crt0.s -Wl,--defsym,_start_address=0x1d00000 -o lzma-kmode-1d00-stub main-kmode.o lzma-stub.o ./lzma/lzma.a $(EE_LDFLAGS) $(LZMA_SIGNATURE)
 
-
 clean:
 	rm -f *.o $(TARGETS) *-tag.stamp
-	$(SUBMAKE) zlib clean
-	$(SUBMAKE) lzo clean
-	$(SUBMAKE) lz4 clean
-	$(SUBMAKE) lzma clean
+	$(MAKE) -C zlib clean
+	$(MAKE) -C lzo clean
+	$(MAKE) -C lz4 clean
+	$(MAKE) -C lzma clean
 
 rebuild: clean all
 
-include ../../mk/toolchain.mk
+include ../../mk/Makefile.template
