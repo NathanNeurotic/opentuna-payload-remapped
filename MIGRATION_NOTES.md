@@ -21,7 +21,7 @@ This document outlines the changes made to the OpenTuna repository to modernize 
 4.  **Continuous Integration (CI)**:
     - The original `.github/workflows/ci.yml` was replaced with a new workflow.
     - A new build and test script, `scripts/ci-smoke.sh`, was created to handle the entire build and test process. This script builds all components and performs basic smoke tests to ensure that the expected binaries are created and are not empty.
-    - The new CI workflow uses the `ps2dev/ps2dev:latest` Docker container, installs necessary build tools, and runs the `ci-smoke.sh` script.
+    - The new CI workflow uses the `ps2dev/ps2dev:v1.3.0` Docker container. The `latest` tag was found to have an incomplete ps2sdk installation, so the older, more stable version is used instead.
     - On a successful build, the workflow uploads all the important binaries as build artifacts.
 
 ## Local Building

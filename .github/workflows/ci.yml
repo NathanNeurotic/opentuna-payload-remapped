@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ps2dev/ps2dev:latest
+    container: ps2dev/ps2dev:v1.3.0
     steps:
       - uses: actions/checkout@v4
       - name: Install build tools
