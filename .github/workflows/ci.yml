@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ps2dev/ps2dev:v1.3.0
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        run: apk add --no-cache build-base
+      - name: Set GSKIT environment
+        run: echo "GSKIT=$PS2DEV/gsKit" >> $GITHUB_ENV
+      - name: Build and smoke test
+        run: ./scripts/ci-smoke.sh
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: opentuna-binaries
+          path: |
+            ps2-packer/ps2-packer
+            launcher-boot/*.elf
+            launcher-keys/*.elf
+            exploit/*.elf
+            exploit/*.bin

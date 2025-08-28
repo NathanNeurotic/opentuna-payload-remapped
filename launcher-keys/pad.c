@@ -33,7 +33,8 @@
  ---------------------------------------------------------------------------
 */
 
-#include <tamtypes.h>
+#include <stddef.h>
+#include <stdint.h>
 #include <kernel.h>
 #include <libpad.h>
 
@@ -44,7 +45,7 @@
 // For video Mode
 extern int VMode;
 
-u32 new_pad;
+uint32_t new_pad;
 
 int  readPad(void);
 void waitAnyPadReady(void);
@@ -54,11 +55,11 @@ int  setupPad(void);
 
 static char padBuf_t[2][256] __attribute__((aligned(64)));
 struct padButtonStatus buttons_t[2];
-u32 padtype_t[2];
-u32 paddata, paddata_t[2];
-u32 old_pad = 0, old_pad_t[2] = {0, 0};
-u32 new_pad_t[2];
-u32 joy_value = 0;
+uint32_t padtype_t[2];
+uint32_t paddata_t[2];
+uint32_t old_pad = 0, old_pad_t[2] = {0, 0};
+uint32_t new_pad_t[2];
+uint32_t joy_value = 0;
 static int test_joy = 0;
 
 #define PAD_R3_V0 0x010000
@@ -73,8 +74,8 @@ static int test_joy = 0;
 //----------------------------------------------------------------
 int readPad(void)
 {
-	static int n[2]={0,0}, nn[2]={0,0};
-	int port, state, ret[2];
+        static int n[2]={0,0}, nn[2]={0,0};
+        int port, state, ret[2] = {0, 0};
 
 	for(port=0; port<2; port++){
 		if((state=padGetState(port, 0))==PAD_STATE_STABLE
