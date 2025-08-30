@@ -2,13 +2,13 @@
 
 #include <tamtypes.h>
 #include <kernel.h>
-#include <sbv_patches.h>
 
 #ifdef DEBUG
 #include <sifrpc.h>
 #endif
 
 #include "packer-stub.h"
+#include "../../compat/compat.h"
 
 #if 1
 static void fast_memzero(u8 * ptr, u32 size) {
